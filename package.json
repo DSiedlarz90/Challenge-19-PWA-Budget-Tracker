@@ -1,0 +1,19 @@
+{
+  "name": "symmetrical-bassoon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coding-boot-camp/symmetrical-bassoon.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coding-boot-camp/symmetrical-bassoon/issues"
+  },
+  "homepage": "https://github.com/coding-boot-camp/symmetrical-bassoon#readme"
+}
