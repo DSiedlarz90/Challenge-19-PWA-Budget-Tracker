@@ -21,11 +21,48 @@ const FILES_TO_CACHE = [
 ];
 
 // sends files to cache
-self.addEventListener('install', function(e) {
-    e.waitUntil(
+self.addEventListener('install', function(i) {
+    i.waitUntil(
         caches.open(CACHE_NAME).then(function (cache) {
-            console.log("installing cache : " + CACHE_NAME)
+            console.log("Installing cache : " + CACHE_NAME)
             return cache.addAll(FILES_TO_CACHE)
+        })
+    )
+}); 
+
+//deletes old cached files
+self.addEventListener('activate', function(i) {
+    i.waitUntil(
+        caches.keys().then(function (keyList) {
+            let cacheKeepList = keyList.filter(function (key) {
+                return key.indexOf(APP_PREFIX);
+            });
+            cacheKeepList.push(CACHE_NAME);
+
+            return Promise.all(
+                keyList.map(function(key, i) {
+                    if (cacheKeepList.indexOf(key) === -1) {
+                        console.log('Deleting cache : ' + keyList[i]);
+                        return caches.delete(keyList[i]);
+                    }
+                })
+            );
+        })
+    );
+});
+
+//provides new cache data or else it uses old cache data.
+self.addEventListener('fetch', function(i) {
+    console.log('fetch request : ' + i.request.url)
+    i.respondWith(
+        caches.match(e.request).then(function (request) {
+            if (request) {
+                console.log('Responding with stored cache : ' + i.request.url)
+                return request
+            } else {
+                console.log('File is not stored, fetching cache : ' + i.request.url)
+                return fetch(i.request)
+            }
         })
     )
 }); 
