@@ -1,6 +1,6 @@
 //global connection variables
 let db;
-const indexedDB = indexedDB.open('PWA_ budget_tracker', 1);
+const indexedDB = indexedDB.open('PWA_budget_tracker', 1);
 
 //runs if upgrade required
 request.onupgradeneeded = function(i) {
